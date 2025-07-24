@@ -1,0 +1,346 @@
+/* --- Global & Base Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #111827; /* Dark background */
+    color: #d1d5db;
+    margin: 0; /* Ensure no default body margin */
+    overflow: hidden; /* Prevent body scroll, main-container handles it */
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row; /* Desktop: Sidebar and Map side-by-side */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Prevent main scrollbar */
+}
+
+/* --- Sidebar Styles (Desktop First) --- */
+#sidebar {
+    width: 30%;
+    max-width: 450px;
+    min-width: 380px;
+    background-color: #1f2937;
+    padding: 1.5rem;
+    overflow-y: auto; /* Allows scrolling for sidebar content */
+    border-right: 1px solid #374151;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* For Bootstrap Offcanvas transition */
+    transition: transform 0.3s ease-in-out;
+}
+
+#sidebar-header h4 {
+    color: #ffffff;
+    font-weight: 700;
+}
+#sidebar-header .subtitle {
+    color: #9ca3af;
+}
+
+#sidebar .card {
+    border-radius: 0.75rem;
+    background-color: #374151;
+    border: 1px solid #4b5563;
+    flex-shrink: 0; /* Prevent cards from shrinking in flex container */
+}
+
+.card-header {
+    font-weight: 600;
+    background-color: #4b5563;
+    color: #e5e7eb;
+    border-bottom: 1px solid #4b5563;
+}
+.card-body {
+    color: #d1d5db;
+}
+
+/* Dashboard Stat Colors */
+.stat-color-new { color: #f87171; }
+.stat-color-investigating { color: #fbbf24; }
+.stat-color-cleaned { color: #4ade80; }
+
+/* Text colors for specific elements inside cards */
+.card-body small.text-muted {
+    color: white !important;
+}
+
+/* Chart container ensures consistent sizing */
+.chart-container {
+    position: relative;
+    height: 220px;
+}
+
+/* --- Map & Controls --- */
+#map-container {
+    flex-grow: 1; /* Map takes remaining space */
+    height: 100%;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    background-color: #e2e8f0;
+    cursor: crosshair;
+}
+
+/* --- Custom Icons --- */
+.custom-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    font-size: 16px; /* Increased for better visibility */
+    width: 32px !important;
+    height: 32px !important;
+}
+
+/* Default dumping icon style */
+.dumping-icon { 
+    background-color: #6b7280; /* Neutral dark grey */ 
+    color: white;
+}
+
+/* Style for 'Under Investigation' markers */
+.investigating-icon {
+    background-color: #f59e0b; /* Orange for investigating */
+    filter: blur(0.5px);
+    color: white;
+}
+
+/* Icon colors */
+.hospital-icon { background-color: #00878A; }
+.tourist-icon { background-color: #8C564B; }
+.lake-icon { background-color: #6ED2DD; }
+.river-icon { background-color: #6ED2DD; }
+.school-icon { background-color: #8DA94C; }
+.primary-school-icon { background-color: #5D7A1F; }
+.office-icon { background-color: #60A5FA; }
+
+
+/* --- Map Legend --- */
+#map-legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(31, 41, 55, 0.9);
+    color: #e5e7eb;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    line-height: 1.6;
+    max-width: 250px;
+    border: 1px solid #4b5563;
+}
+#map-legend h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #4b5563;
+    padding-bottom: 5px;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+.legend-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+    border-radius: 50%;
+    color: white;
+}
+
+/* --- Live Location Button (styled by Leaflet's control classes and Bootstrap) --- */
+/* The Leaflet.Control.extend method correctly places it in leaflet-bottom leaflet-left */
+/* We just need to ensure the button itself looks good */
+.leaflet-control-button {
+    display: flex !important; /* Override default block if necessary */
+    align-items: center;
+    gap: 5px;
+    font-size: 14px; /* Consistent button font size */
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from <a> */
+    color: inherit; /* Inherit color from parent (btn-light) */
+}
+
+
+/* --- Toast Notification --- */
+#toast-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background-color: #1e293b;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    text-align: center;
+    min-width: 250px;
+}
+#toast-container.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Admin popup actions styling */
+.admin-popup-actions {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #4b5563;
+}
+.admin-popup-actions .input-group-sm label {
+    font-size: 0.8rem;
+}
+.admin-popup-actions .form-control-sm,
+.admin-popup-actions .form-select-sm {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* --- Loading Spinner with text (Loading Overlay) --- */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+.loading-overlay .spinner-content {
+    background-color: #1f2937;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loading-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 10px;
+}
+
+/* --- Responsive Design: Mobile-First Approach --- */
+/* Hide mobile navbar by default on larger screens */
+.mobile-navbar {
+    display: none;
+}
+
+/* Adjust sidebar for mobile using Bootstrap's offcanvas */
+#sidebar.offcanvas {
+    width: 300px; /* Smaller width for mobile sidebar */
+    min-width: unset; /* Override desktop min-width */
+    transform: translateX(-100%); /* Start off-screen */
+    visibility: hidden;
+    /* Ensure Bootstrap's offcanvas classes handle the rest of positioning/transitions */
+}
+
+/* On mobile, map container takes full width/height below navbar */
+#map-container {
+    width: 100%;
+    height: calc(100vh - 56px); /* Adjust for navbar height */
+}
+
+/* Adjust map legend for mobile */
+#map-legend {
+    bottom: 10px;
+    right: 10px;
+    max-width: 180px; /* Smaller for mobile */
+    font-size: 12px;
+    padding: 8px;
+}
+#map-legend h4 {
+    font-size: 14px;
+}
+.legend-item {
+    font-size: 12px;
+}
+.legend-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+
+/* Media Query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 992px) { /* Equivalent to Bootstrap's 'lg' breakpoint */
+    .mobile-navbar {
+        display: none !important; /* Hide mobile navbar on desktop */
+    }
+
+    #main-container {
+        flex-direction: row; /* Desktop: Sidebar and Map side-by-side */
+    }
+
+    #sidebar {
+        position: relative; /* Desktop: Normal flow */
+        transform: translateX(0); /* Ensure visible */
+        visibility: visible;
+        width: 30%; /* Original desktop width */
+        max-width: 450px;
+        min-width: 380px;
+    }
+
+    #map-container {
+        height: 100vh; /* Full viewport height on desktop */
+        width: 70%; /* Map takes remaining width */
+    }
+    
+    /* Ensure offcanvas classes don't mess up desktop sidebar */
+    #sidebar.offcanvas-start:not(.show) {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    /* Reset map legend for desktop */
+    #map-legend {
+        bottom: 20px;
+        right: 20px;
+        max-width: 250px;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    #map-legend h4 {
+        font-size: 16px;
+    }
+    .legend-item {
+        font-size: 14px;
+    }
+    .legend-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        margin-right: 8px;
+    }
+}
